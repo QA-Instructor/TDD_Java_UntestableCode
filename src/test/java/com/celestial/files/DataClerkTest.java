@@ -13,7 +13,8 @@ public class DataClerkTest
    public void testProcessData()
    {
       // arrange
-      DataClerk cut = new DataClerk();
+      DataClerk.FileLog fl = new DataClerk.FileLog();
+      DataClerk cut = new DataClerk( fl );
       
       // act
       cut.ProcessData();
