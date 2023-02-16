@@ -4,17 +4,17 @@ import java.time.LocalTime;
 
 public class DataClerk
 {
-   static   public class FileLog
+   static   public class FileLog implements IFileLog
    {
-       public  void    ClearTheLog()
+       public  void    clearTheLog()
        {
            // Simulated method that would do something to files in the log
        }
    }
 
-   private FileLog theFileLog;
+   private IFileLog theFileLog;
 
-   public   DataClerk( FileLog fl )
+   public   DataClerk( IFileLog fl )
    {
       this.theFileLog = fl;
    }
@@ -27,7 +27,7 @@ public class DataClerk
       if( now.isBefore(stopTime) )
       {
          System.out.println("Ready to process the data");
-         theFileLog.ClearTheLog();
+         theFileLog.clearTheLog();
       }
    }
 }
