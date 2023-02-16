@@ -42,4 +42,25 @@ public class DataClerkTest
       // assert
       verify(fl, times(1)).clearTheLog();
    }
+   
+   @Test
+   public void files_are_wrongly_logged_after_8pm_mocked()
+   {
+      // This test always fails if run before 8pm because of the way 
+      // DataCleark is written.
+      // Open git tag v1.4 which has an updated version of DataClerk
+      // arrange
+      IFileLog fl = mock(IFileLog.class);
+      
+      // use the doNothing on void methods
+      doNothing().when(fl).clearTheLog();
+      DataClerk cut = new DataClerk(fl);
+
+      // act
+      cut.ProcessData();
+
+      // assert
+      verify(fl, times(0)).clearTheLog();
+      
+   }
 }
