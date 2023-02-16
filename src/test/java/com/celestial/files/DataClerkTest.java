@@ -1,8 +1,11 @@
 package com.celestial.files;
 
+import java.time.LocalTime;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mockito;
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
@@ -46,21 +49,24 @@ public class DataClerkTest
    @Test
    public void files_are_wrongly_logged_after_8pm_mocked()
    {
-      // This test always fails if run before 8pm because of the way 
-      // DataCleark is written.
-      // Open git tag v1.4 which has an updated version of DataClerk
-      // arrange
+      // We can now run this test at any time of the day
+      // This test now passes because we are able to set the time in the test
       IFileLog fl = mock(IFileLog.class);
       
       // use the doNothing on void methods
       doNothing().when(fl).clearTheLog();
       DataClerk cut = new DataClerk(fl);
+      // wrap the cut in a spy object
+      DataClerk cutSpy = spy( cut );
+
+      // Set an expectation for getTime(), this is a new method will write
+      Mockito.doReturn(LocalTime.parse("21:00")).when(cutSpy).getTime();
 
       // act
-      cut.ProcessData();
+      // use the SPY not the CUT
+      cutSpy.ProcessData();
 
       // assert
       verify(fl, times(0)).clearTheLog();
-      
    }
 }

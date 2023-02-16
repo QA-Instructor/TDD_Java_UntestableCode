@@ -19,9 +19,14 @@ public class DataClerk
       this.theFileLog = fl;
    }
    
+   public   LocalTime getTime()
+   {
+      return  LocalTime.now();
+   }
+   
    public  void    ProcessData()
    {
-      LocalTime now = LocalTime.now();
+      LocalTime now = getTime();
       LocalTime stopTime = LocalTime.parse("20:00");
 
       if( now.isBefore(stopTime) )
